@@ -119,14 +119,14 @@ class StudentService {
       const [
         _name,
         _registration,
-        publication_date: safeDate(publication_date),
+        publication_date,
         publication_page,
         certificate_number,
         second_issue,
         book,
         book_page,
-        enrollment_start: safeDate(enrollment_start),
-        enrollment_end: safeDate(enrollment_end),
+        enrollment_start,
+        enrollment_end,
         process_number,
       ] = studentData.row;
 
@@ -137,14 +137,14 @@ class StudentService {
         });
 
         const certificate = await certificateService.createCertificateFromRow({
-          publication_date: parseExcelDate(publication_date),
+          publication_date: safeDate(publication_date),
           publication_page,
           certificate_number,
           second_issue,
           book,
           book_page,
-          enrollment_start: parseExcelDate(enrollment_start),
-          enrollment_end: parseExcelDate(enrollment_end),
+          enrollment_start: safeDate(enrollment_start),
+          enrollment_end: safeDate(enrollment_end),
           process_number,
         });
 
