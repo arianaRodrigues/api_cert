@@ -110,18 +110,23 @@ class StudentService {
 
     let successCount = 0;
 
+    const safeDate = (date: any) => {
+      const parsed = parseExcelDate(date);
+      return parsed instanceof Date ? parsed : null;
+    };
+
     for (const studentData of filteredValidStudents) {
       const [
         _name,
         _registration,
-        publication_date,
+        publication_date: safeDate(publication_date),
         publication_page,
         certificate_number,
         second_issue,
         book,
         book_page,
-        enrollment_start,
-        enrollment_end,
+        enrollment_start: safeDate(enrollment_start),
+        enrollment_end: safeDate(enrollment_end),
         process_number,
       ] = studentData.row;
 
