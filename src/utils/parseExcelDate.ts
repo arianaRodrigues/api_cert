@@ -6,7 +6,7 @@ export const parseExcelDate = (value: any): Date | null => {
   if (typeof value === "number") {
     const excelEpoch = new Date(1900, 0, 1);
     const date = new Date(excelEpoch.getTime() + (value - 2) * 86400000);
-    return date;
+    return isNaN(date.getTime()) ? null : date;
   }
 
   if (typeof value === "string") {
@@ -16,17 +16,19 @@ export const parseExcelDate = (value: any): Date | null => {
     if (match) {
       const [_, day, month, year] = match;
       const fullYear = year.length === 2 ? `20${year}` : year;
-      return new Date(`${fullYear}-${month}-${day}`);
+       const date = new Date(`${fullYear}-${month}-${day}`);
+      return isNaN(date.getTime()) ? null : date;
     }
 
     const match2 = trimmed.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
     if (match2) {
       const [_, day, month, year] = match2;
-      return new Date(`${year}-${month}-${day}`);
+      const date = new Date(`${year}-${month}-${day}`);
+      return isNaN(date.getTime()) ? null : date;
     }
 
     const parsed = new Date(trimmed);
-    if (!isNaN(parsed.getTime())) return parsed;
+    return isNaN(parsed.getTime()) ? null : parsed;
   }
 
   return null;
