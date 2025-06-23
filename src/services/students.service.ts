@@ -28,6 +28,7 @@ class StudentService {
       relations: { certificate: true },
       order: { name: "ASC" },
     });
+    console.log(students)
     return students;
   }
 
